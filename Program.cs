@@ -1,6 +1,7 @@
 ﻿/*
-Пользователь вводит число месяца (апрель 2026).
-Программа проверяет число и выводит: рабочий или нерабочий это день.
+Пользователь вводит название месяца, число дней в месяце
+и номер дня в недели для 1-го числа месяца (1 - понедельник, 2 - вторник, ..., 7 - воскресенье).
+Программа выводит календарь месяца.
 */
 
 using static System.Console;
@@ -20,16 +21,47 @@ ExitApp();
 
 void Action()
 {
-    int dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
-    while(dayNumber < 1 || dayNumber > 30)
+    string month = EnterText("Введите название месяца: ");
+    int daysNumber = EnterInteger("Введите количество дней в месяце: ");
+    int firstWeekDayNumber = EnterInteger("Введите номер дня недели для 1-го числа: ");
+
+    WriteMonth(month, daysNumber, firstWeekDayNumber);
+
+    /*
+        int dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
+        while(dayNumber < 1 || dayNumber > 30)
+        {
+            Write("Ошибка! ");
+            dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
+        }
+        if(dayNumber % 7 == 4 || dayNumber % 7 == 5)
+            WriteLine("Это нерабочий день.");
+        else
+            WriteLine("Это рабочий день.");
+    */
+}
+
+void WriteMonth(string month, int daysNumber, int firstWeekDayNumber)
+{
+    WriteLine();
+    WriteLine(month.ToUpper());
+    WriteLine(" пн. вт. ср. чт. пт. сб. вс.");
+    for(int i = 1; i < firstWeekDayNumber; i++)
     {
-        Write("Ошибка! ");
-        dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
+        Write("    ");
     }
-    if(dayNumber % 7 == 4 || dayNumber % 7 == 5)
-        WriteLine("Это нерабочий день.");
-    else
-        WriteLine("Это рабочий день.");
+    int weekDayNumber = firstWeekDayNumber;
+    for(int day = 1; day <= daysNumber; day++)
+    {
+        Write($"{day,4}");
+        if(weekDayNumber == 7)
+        {
+            weekDayNumber = 0;
+            WriteLine();
+        }
+        weekDayNumber++;
+    }
+    WriteLine();
 }
 
 void WriteTitle(string title)
