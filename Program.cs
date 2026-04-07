@@ -1,7 +1,16 @@
 ﻿/*
 Пользователь вводит название месяца, число дней в месяце
 и номер дня в недели для 1-го числа месяца (1 - понедельник, 2 - вторник, ..., 7 - воскресенье).
+Номер дня недели проверяется.
 Программа выводит календарь месяца.
+
+Пользователь вводит число месяца,
+программа выводит название дня недели для этого числа,
+разные дни недели выделяются разными цветами:
+понедельник - черным, 
+вторник, среда, четверг - синим, 
+пятница - зеленым, 
+суббота, воскресенье - красным.
 */
 
 using static System.Console;
@@ -24,21 +33,21 @@ void Action()
     string month = EnterText("Введите название месяца: ");
     int daysNumber = EnterInteger("Введите количество дней в месяце: ");
     int firstWeekDayNumber = EnterInteger("Введите номер дня недели для 1-го числа: ");
+    while(firstWeekDayNumber < 1 || firstWeekDayNumber > 7)
+    {
+        Write("Ошибка! ");
+        firstWeekDayNumber = EnterInteger("Введите номер дня недели для 1-го числа: ");
+    }
 
     WriteMonth(month, daysNumber, firstWeekDayNumber);
 
-    /*
-        int dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
-        while(dayNumber < 1 || dayNumber > 30)
-        {
-            Write("Ошибка! ");
-            dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
-        }
-        if(dayNumber % 7 == 4 || dayNumber % 7 == 5)
-            WriteLine("Это нерабочий день.");
-        else
-            WriteLine("Это рабочий день.");
-    */
+    int dayNumber = EnterInteger("Введите число месяца (от 1 до {daysNumber}): ");
+    while(dayNumber < 1 || dayNumber > daysNumber)
+    {
+        Write("Ошибка! ");
+        dayNumber = EnterInteger($"Введите число месяца (от 1 до {daysNumber}): ");
+    }
+    WriteDayOfWeek(month, dayNumber, firstWeekDayNumber);
 }
 
 void WriteMonth(string month, int daysNumber, int firstWeekDayNumber)
@@ -62,6 +71,34 @@ void WriteMonth(string month, int daysNumber, int firstWeekDayNumber)
         weekDayNumber++;
     }
     WriteLine();
+}
+
+void WriteDayOfWeek(string month, int dayNumber, int firstWeekDayNumber)
+{
+    string[] weekDays = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница",
+        "Суббота", "Воскресенье" };
+    int weekDayNumber = (firstWeekDayNumber + dayNumber - 2) % 7;
+    switch(weekDayNumber)
+    {
+        case 0:
+            ForegroundColor = ConsoleColor.Black;
+            BackgroundColor = ConsoleColor.White;
+            break;
+        case 1:
+        case 2:
+        case 3:
+            ForegroundColor = ConsoleColor.Blue;
+            break;
+        case 4:
+            ForegroundColor = ConsoleColor.Green;
+            break;
+        case 5:
+        case 6:
+            ForegroundColor = ConsoleColor.Red;
+            break;
+    }
+    WriteLine($"{month}, {dayNumber}: {weekDays[weekDayNumber]}");
+    ResetColor();
 }
 
 void WriteTitle(string title)
