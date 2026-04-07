@@ -1,5 +1,6 @@
 ﻿/*
-C# for Grandchildren: educational console application
+Пользователь вводит число месяца (апрель 2026).
+Программа проверяет число и выводит: рабочий или нерабочий это день.
 */
 
 using static System.Console;
@@ -19,7 +20,16 @@ ExitApp();
 
 void Action()
 {
-
+    int dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
+    while(dayNumber < 1 || dayNumber > 30)
+    {
+        Write("Ошибка! ");
+        dayNumber = EnterInteger("Введите число месяца (от 1 до 30): ");
+    }
+    if(dayNumber % 7 == 4 || dayNumber % 7 == 5)
+        WriteLine("Это нерабочий день.");
+    else
+        WriteLine("Это рабочий день.");
 }
 
 void WriteTitle(string title)
