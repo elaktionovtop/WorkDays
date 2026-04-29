@@ -41,7 +41,7 @@ void Action()
 
     WriteMonth(month, daysNumber, firstWeekDayNumber);
 
-    int dayNumber = EnterInteger("Введите число месяца (от 1 до {daysNumber}): ");
+    int dayNumber = EnterInteger($"Введите число месяца (от 1 до {daysNumber}): ");
     while(dayNumber < 1 || dayNumber > daysNumber)
     {
         Write("Ошибка! ");
