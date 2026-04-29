@@ -59,25 +59,25 @@ void WriteMonth(string month, int daysNumber, int firstWeekDayNumber)
     {
         Write("    ");
     }
-    int weekDayNumber = firstWeekDayNumber;
-    for(int day = 1; day <= daysNumber; day++)
+
+    for(int day = 1, i = firstWeekDayNumber; day <= daysNumber; day++, i++)
     {
         Write($"{day,4}");
-        if(weekDayNumber == 7)
+        if(i % 7 == 0)
         {
-            weekDayNumber = 0;
             WriteLine();
         }
-        weekDayNumber++;
     }
     WriteLine();
 }
 
 void WriteDayOfWeek(string month, int dayNumber, int firstWeekDayNumber)
 {
-    string[] weekDays = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница",
+    string[] weekDays = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница",
         "Суббота", "Воскресенье" };
-    int weekDayNumber = (firstWeekDayNumber + dayNumber - 2) % 7;
+
+    int weekDayNumber = (dayNumber + firstWeekDayNumber - 2) % 7;
+
     switch(weekDayNumber)
     {
         case 0:
